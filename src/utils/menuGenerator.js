@@ -11,11 +11,22 @@ function shuffle(arr) {
   return a;
 }
 
-function filterRecipes(mealType, cuisineStyle, mealSlot) {
+/**
+ * Filter recipes by:
+ * - mealTypes: array of types (OR logic)
+ * - cuisineStyles: array of styles (OR logic)
+ * - mealSlot: 'breakfast' | 'lunch' | 'dinner'
+ */
+function filterRecipes(mealTypes, cuisineStyles, mealSlot) {
+  // Normalize to arrays
+  const types = Array.isArray(mealTypes) ? mealTypes : [mealTypes];
+  const styles = Array.isArray(cuisineStyles) ? cuisineStyles : [cuisineStyles];
+
   return recipes.filter((r) => {
-    const matchType = r.type.includes(mealType);
+    const matchType = types.some((t) => r.type.includes(t));
     const matchCuisine =
-      cuisineStyle === 'toutes' || r.style.includes(cuisineStyle);
+      styles.includes('toutes') ||
+      styles.some((s) => r.style.includes(s));
     const matchMeal = r.meal.includes(mealSlot);
     return matchType && matchCuisine && matchMeal;
   });
@@ -33,11 +44,14 @@ function pickRecipe(pool, usedIds) {
 }
 
 export function generateMenu(preferences) {
-  const { days, mealType, mealsPerDay, cuisineStyle } = preferences;
+  // Support both old (mealType/cuisineStyle) and new (mealTypes/cuisineStyles) shapes
+  const mealTypes = preferences.mealTypes ?? (preferences.mealType ? [preferences.mealType] : ['équilibré']);
+  const cuisineStyles = preferences.cuisineStyles ?? (preferences.cuisineStyle ? [preferences.cuisineStyle] : ['française']);
+  const { days, mealsPerDay } = preferences;
 
-  const breakfastPool = filterRecipes(mealType, cuisineStyle, 'breakfast');
-  const lunchPool = filterRecipes(mealType, cuisineStyle, 'lunch');
-  const dinnerPool = filterRecipes(mealType, cuisineStyle, 'dinner');
+  const breakfastPool = filterRecipes(mealTypes, cuisineStyles, 'breakfast');
+  const lunchPool = filterRecipes(mealTypes, cuisineStyles, 'lunch');
+  const dinnerPool = filterRecipes(mealTypes, cuisineStyles, 'dinner');
 
   // Fallback to wider pool if filtered is empty
   const bfFallback = recipes.filter((r) => r.meal.includes('breakfast'));
@@ -84,6 +98,34 @@ export function generateMenu(preferences) {
   }
 
   return menu;
+}
+
+/**
+ * Get a replacement recipe compatible with the original's style/type/slot.
+ * excludeId: the current recipe id to avoid returning same one.
+ */
+export function getReplacementRecipe(originalRecipe, mealSlot, excludeId) {
+  const styles = originalRecipe.style || [];
+  const types = originalRecipe.type || [];
+
+  // Try to find matching recipe
+  let candidates = recipes.filter((r) => {
+    if (r.id === excludeId) return false;
+    const matchMeal = r.meal.includes(mealSlot);
+    const matchType = types.some((t) => r.type.includes(t));
+    const matchStyle = styles.some((s) => r.style.includes(s));
+    return matchMeal && (matchType || matchStyle);
+  });
+
+  if (candidates.length === 0) {
+    // Wider fallback: just same meal slot
+    candidates = recipes.filter((r) => r.id !== excludeId && r.meal.includes(mealSlot));
+  }
+
+  if (candidates.length === 0) return originalRecipe;
+
+  const shuffled = shuffle(candidates);
+  return shuffled[0];
 }
 
 export function getVeganAlternative(recipe) {

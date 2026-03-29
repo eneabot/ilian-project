@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import useStore from '../store/useStore';
+import { getReplacementRecipe } from '../utils/menuGenerator';
 
 const MEAL_LABELS = {
   breakfast: { label: 'Petit-déjeuner', icon: '☀️' },
@@ -7,20 +8,30 @@ const MEAL_LABELS = {
   dinner: { label: 'Dîner', icon: '🌙' },
 };
 
-function RecipeCard({ recipe, mealSlot, onVeganAlt }) {
+function RecipeCard({ recipe, mealSlot, dayNumber }) {
+  const { replaceRecipe } = useStore();
   const [showAlt, setShowAlt] = useState(false);
+  const [replacing, setReplacing] = useState(false);
   const isDiscovery = recipe.tags?.includes('découverte');
 
+  const handleReplace = () => {
+    setReplacing(true);
+    const newRecipe = getReplacementRecipe(recipe, mealSlot, recipe.id);
+    replaceRecipe(dayNumber, mealSlot, newRecipe);
+    setShowAlt(false);
+    setTimeout(() => setReplacing(false), 400);
+  };
+
   return (
-    <div className="bg-[#1a1a1a] rounded-2xl p-4 mb-3">
+    <div className={`bg-[#1a1a1a] rounded-2xl p-4 mb-3 transition-opacity ${replacing ? 'opacity-50' : 'opacity-100'}`}>
       <div className="flex items-start justify-between mb-2">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-1 min-w-0">
           <span className="text-2xl">{recipe.icon || '🍽️'}</span>
-          <div>
-            <div className="flex items-center gap-2">
+          <div className="min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
               <span className="font-semibold text-white">{recipe.name}</span>
               {isDiscovery && (
-                <span className="text-xs bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-full font-medium">
+                <span className="text-xs bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-full font-medium whitespace-nowrap">
                   ✨ Découverte
                 </span>
               )}
@@ -28,6 +39,14 @@ function RecipeCard({ recipe, mealSlot, onVeganAlt }) {
             <span className="text-xs text-gray-500 capitalize">{recipe.style?.join(', ')}</span>
           </div>
         </div>
+        {/* Replace button */}
+        <button
+          onClick={handleReplace}
+          title="Changer ce repas"
+          className="ml-2 p-1.5 rounded-lg bg-[#2a2a2a] hover:bg-emerald-500/20 text-gray-400 hover:text-emerald-400 transition-all text-sm flex-shrink-0"
+        >
+          🔄
+        </button>
       </div>
 
       <div className="flex gap-2 flex-wrap">
@@ -87,7 +106,14 @@ export default function MenuView() {
       {/* Header */}
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-emerald-400">📅 Menu généré</h2>
-        <p className="text-gray-400 text-sm">{preferences.people} personne{preferences.people > 1 ? 's' : ''} · {total} jours</p>
+        <p className="text-gray-400 text-sm">
+          {preferences.people} personne{preferences.people > 1 ? 's' : ''} · {total} jours
+          {(preferences.mealTypes || preferences.mealType) && (
+            <span className="ml-2 text-emerald-400/70">
+              · {(preferences.mealTypes || [preferences.mealType]).join(', ')}
+            </span>
+          )}
+        </p>
       </div>
 
       {/* Day navigation */}
@@ -138,7 +164,7 @@ export default function MenuView() {
               <span className="text-lg">{MEAL_LABELS.breakfast.icon}</span>
               <h3 className="font-bold text-gray-300">{MEAL_LABELS.breakfast.label}</h3>
             </div>
-            <RecipeCard recipe={day.breakfast} mealSlot="breakfast" />
+            <RecipeCard recipe={day.breakfast} mealSlot="breakfast" dayNumber={day.day} />
           </div>
         )}
 
@@ -148,7 +174,7 @@ export default function MenuView() {
               <span className="text-lg">{MEAL_LABELS.lunch.icon}</span>
               <h3 className="font-bold text-gray-300">{MEAL_LABELS.lunch.label}</h3>
             </div>
-            <RecipeCard recipe={day.lunch} mealSlot="lunch" />
+            <RecipeCard recipe={day.lunch} mealSlot="lunch" dayNumber={day.day} />
           </div>
         )}
 
@@ -158,7 +184,7 @@ export default function MenuView() {
               <span className="text-lg">{MEAL_LABELS.dinner.icon}</span>
               <h3 className="font-bold text-gray-300">{MEAL_LABELS.dinner.label}</h3>
             </div>
-            <RecipeCard recipe={day.dinner} mealSlot="dinner" />
+            <RecipeCard recipe={day.dinner} mealSlot="dinner" dayNumber={day.day} />
           </div>
         )}
       </div>

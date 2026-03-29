@@ -3,6 +3,7 @@ import Onboarding from './components/Onboarding';
 import MenuView from './components/MenuView';
 import ShoppingList from './components/ShoppingList';
 import Stores from './components/Stores';
+import Markets from './components/Markets';
 import EmailRecap from './components/EmailRecap';
 import BottomNav from './components/BottomNav';
 
@@ -15,6 +16,7 @@ export default function App() {
       case 'menu': return <MenuView />;
       case 'shopping': return <ShoppingList />;
       case 'stores': return <Stores />;
+      case 'markets': return <Markets />;
       case 'email': return <EmailRecap />;
       default: return <Onboarding />;
     }
