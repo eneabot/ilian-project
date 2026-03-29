@@ -1,0 +1,53 @@
+export const dailyProducts = [
+  // === HYGIÈNE ===
+  { id: "d1", name: "Savon liquide", category: "hygiène", unit: "flacon", defaultQty: 1, icon: "🧼" },
+  { id: "d2", name: "Shampooing", category: "hygiène", unit: "flacon", defaultQty: 1, icon: "🚿" },
+  { id: "d3", name: "Dentifrice", category: "hygiène", unit: "tube", defaultQty: 1, icon: "🪥" },
+  { id: "d4", name: "Brosse à dents", category: "hygiène", unit: "pièce", defaultQty: 1, icon: "🪥" },
+  { id: "d5", name: "Déodorant", category: "hygiène", unit: "pièce", defaultQty: 1, icon: "✨" },
+  { id: "d6", name: "Gel douche", category: "hygiène", unit: "flacon", defaultQty: 1, icon: "🛁" },
+  { id: "d7", name: "Papier toilette", category: "hygiène", unit: "paquet (6 rouleaux)", defaultQty: 1, icon: "🧻" },
+  { id: "d8", name: "Coton-tiges", category: "hygiène", unit: "boîte", defaultQty: 1, icon: "🌿" },
+  { id: "d9", name: "Mouchoirs", category: "hygiène", unit: "paquet", defaultQty: 2, icon: "🤧" },
+  { id: "d10", name: "Rasoir", category: "hygiène", unit: "pièce", defaultQty: 1, icon: "🪒" },
+
+  // === ENTRETIEN ===
+  { id: "d11", name: "Liquide vaisselle", category: "entretien", unit: "flacon", defaultQty: 1, icon: "🧽" },
+  { id: "d12", name: "Lessive liquide", category: "entretien", unit: "bouteille", defaultQty: 1, icon: "👕" },
+  { id: "d13", name: "Éponges", category: "entretien", unit: "paquet (3)", defaultQty: 1, icon: "🧹" },
+  { id: "d14", name: "Sacs poubelle", category: "entretien", unit: "rouleau", defaultQty: 1, icon: "🗑️" },
+  { id: "d15", name: "Produit nettoyant multi-surfaces", category: "entretien", unit: "spray", defaultQty: 1, icon: "🧴" },
+  { id: "d16", name: "Papier essuie-tout", category: "entretien", unit: "rouleau", defaultQty: 2, icon: "🧻" },
+  { id: "d17", name: "Tablettes lave-vaisselle", category: "entretien", unit: "paquet (40)", defaultQty: 1, icon: "✨" },
+
+  // === CUISINE DE BASE ===
+  { id: "d18", name: "Sel de table", category: "épicerie", unit: "boîte", defaultQty: 1, icon: "🧂" },
+  { id: "d19", name: "Poivre noir moulu", category: "épicerie", unit: "moulin", defaultQty: 1, icon: "🌶️" },
+  { id: "d20", name: "Huile d'olive", category: "épicerie", unit: "bouteille 75cl", defaultQty: 1, icon: "🫒" },
+  { id: "d21", name: "Huile de tournesol", category: "épicerie", unit: "bouteille 1L", defaultQty: 1, icon: "🌻" },
+  { id: "d22", name: "Vinaigre balsamique", category: "épicerie", unit: "bouteille", defaultQty: 1, icon: "🍶" },
+  { id: "d23", name: "Moutarde de Dijon", category: "épicerie", unit: "pot", defaultQty: 1, icon: "🫙" },
+  { id: "d24", name: "Sauce soja", category: "épicerie", unit: "bouteille", defaultQty: 1, icon: "🍱" },
+  { id: "d25", name: "Ketchup", category: "épicerie", unit: "flacon", defaultQty: 1, icon: "🍅" },
+  { id: "d26", name: "Mayonnaise", category: "épicerie", unit: "pot", defaultQty: 1, icon: "🥄" },
+  { id: "d27", name: "Sucre blanc", category: "épicerie", unit: "paquet 1kg", defaultQty: 1, icon: "🍬" },
+  { id: "d28", name: "Farine de blé T55", category: "épicerie", unit: "paquet 1kg", defaultQty: 1, icon: "🌾" },
+  { id: "d29", name: "Riz blanc long grain", category: "épicerie", unit: "paquet 1kg", defaultQty: 1, icon: "🍚" },
+  { id: "d30", name: "Pâtes spaghetti", category: "épicerie", unit: "paquet 500g", defaultQty: 1, icon: "🍝" },
+  { id: "d31", name: "Bouillon cube légumes", category: "épicerie", unit: "boîte", defaultQty: 1, icon: "🧊" },
+  { id: "d32", name: "Café moulu ou en grains", category: "épicerie", unit: "paquet 250g", defaultQty: 1, icon: "☕" },
+  { id: "d33", name: "Thé vert", category: "épicerie", unit: "boîte 20 sachets", defaultQty: 1, icon: "🍵" },
+
+  // === SNACKS ===
+  { id: "d34", name: "Chips nature", category: "snacks", unit: "sachet", defaultQty: 2, icon: "🥔" },
+  { id: "d35", name: "Chocolat noir 70%", category: "snacks", unit: "tablette", defaultQty: 2, icon: "🍫" },
+  { id: "d36", name: "Fruits secs (noix)", category: "snacks", unit: "sachet 200g", defaultQty: 1, icon: "🥜" },
+  { id: "d37", name: "Barres de céréales", category: "snacks", unit: "boîte (6)", defaultQty: 1, icon: "🍫" },
+  { id: "d38", name: "Crackers salés", category: "snacks", unit: "paquet", defaultQty: 1, icon: "🫙" },
+  { id: "d39", name: "Biscuits petit-beurre", category: "snacks", unit: "paquet", defaultQty: 1, icon: "🍪" },
+  { id: "d40", name: "Pop-corn nature", category: "snacks", unit: "sachet", defaultQty: 1, icon: "🍿" },
+  { id: "d41", name: "Amandes grillées", category: "snacks", unit: "sachet 150g", defaultQty: 1, icon: "🌰" },
+  { id: "d42", name: "Bonbons gélifiés", category: "snacks", unit: "sachet", defaultQty: 1, icon: "🍬" },
+  { id: "d43", name: "Eau gazeuse", category: "snacks", unit: "pack 6x50cl", defaultQty: 1, icon: "💧" },
+  { id: "d44", name: "Jus d'orange 100%", category: "snacks", unit: "bouteille 1L", defaultQty: 2, icon: "🍊" },
+];
